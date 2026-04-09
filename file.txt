@@ -26,25 +26,26 @@ plt.show()
 print("Image saved as generated_image.png")
 
 2.import torch
+import torch
 from diffusers import StableDiffusionPipeline
 import matplotlib.pyplot as plt
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-model_id = "runwayml/stable-diffusion-v1-5"
-
+model_id = "stabilityai/stable-diffusion-2-1"
 pipe = StableDiffusionPipeline.from_pretrained(model_id)
+
 pipe = pipe.to(device)
 
 prompt = "A medical illustration of human brain MRI scan, high detail"
 
-image = pipe(prompt).images[0]
-
+result = pipe(prompt)
+image = result.images[0]
 image.save("medical_output.png")
 
 plt.imshow(image)
 plt.axis("off")
-plt.title("Generated Image")
+plt.title("Generated Medical Image")
 plt.show()
 
 3.!pip install transformers torch
