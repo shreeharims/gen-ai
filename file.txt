@@ -1,0 +1,275 @@
+1.!pip install diffusers transformers accelerate torch pillow matplotlib
+import torch
+from diffusers import StableDiffusionPipeline
+import matplotlib.pyplot as plt
+
+device = "cuda" if torch.cuda.is_available() else "cpu"
+
+model_id = "runwayml/stable-diffusion-v1-5"
+
+pipe = StableDiffusionPipeline.from_pretrained(model_id)
+pipe = pipe.to(device)
+
+prompt = input("Enter text prompt: ")
+
+result = pipe(prompt)
+
+image = result.images[0]
+
+image.save("generated_image.png")
+
+plt.imshow(image)
+plt.axis("off")
+plt.title("Generated Image")
+plt.show()
+
+print("Image saved as generated_image.png")
+
+2.import torch
+from diffusers import StableDiffusionPipeline
+import matplotlib.pyplot as plt
+
+device = "cuda" if torch.cuda.is_available() else "cpu"
+
+model_id = "runwayml/stable-diffusion-v1-5"
+
+pipe = StableDiffusionPipeline.from_pretrained(model_id)
+pipe = pipe.to(device)
+
+prompt = "A medical illustration of human brain MRI scan, high detail"
+
+image = pipe(prompt).images[0]
+
+image.save("medical_output.png")
+
+plt.imshow(image)
+plt.axis("off")
+plt.title("Generated Image")
+plt.show()
+
+3.!pip install transformers torch
+from transformers import pipeline
+
+model_name = "distilbert-base-cased-distilled-squad"
+
+qa_model = pipeline("question-answering", model=model_name)
+
+context = """
+Artificial Intelligence (AI) is a branch of computer science that aims to create intelligent machines.
+It enables systems to learn from data, make decisions, and solve problems.
+AI is widely used in healthcare for diagnosis, in education for personalized learning,
+and in industries for automation and efficiency.
+"""
+
+print("Ask questions (type 'exit' to stop)\n")
+
+while True:
+    question = input("Enter your question: ")
+    
+    if question.lower() == "exit":
+        print("Bye!")
+        break
+    
+    result = qa_model(question=question, context=context)
+    
+    print("Answer:", result['answer'], "\n")
+
+4.from transformers import pipeline
+
+summarizer = pipeline("summarization")
+
+print("Enter paragraph (type 'exit' to quit):\n")
+
+while True:
+    text = input("Input: ")
+    
+    if text.lower() == "exit":
+        print("Bye!")
+        break
+    
+    summary = summarizer(text, max_length=80, min_length=30, do_sample=False)
+    
+    print("\nOriginal Text:\n", text)
+    print("\nSummary:\n", summary[0]['summary_text'])
+    print("\n" + "-"*40 + "\n")
+
+5.from transformers import pipeline
+
+generator = pipeline("text-generation", model="gpt2")
+
+print("Enter incomplete prompt (type 'exit' to quit):\n")
+
+while True:
+    prompt = input("Input: ")
+    
+    if prompt.lower() == "exit":
+        print("Bye!")
+        break
+    
+    result = generator(prompt, max_length=50, num_return_sequences=1)
+    
+    print("\nCompleted Text:\n", result[0]['generated_text'])
+    print("\n" + "-"*40 + "\n")
+
+6.from transformers import pipeline
+
+model_name = "gpt2"
+
+generator = pipeline("text-generation", model=model_name)
+
+def generate_article(prompt):
+    result = generator(prompt, max_length=250, num_return_sequences=1)
+    return result[0]['generated_text']
+
+engineered_prompt = """
+Write a short and clear article on the topic: Applications of Generative AI in Healthcare.
+
+Structure:
+1. Introduction
+2. Applications (diagnosis, drug discovery, medical imaging)
+3. Benefits
+4. Conclusion
+
+Use simple language.
+"""
+
+article = generate_article(engineered_prompt)
+
+print("Prompt Used:\n", engineered_prompt)
+print("\nGenerated Article:\n")
+print(article)
+
+PART-B
+1.import numpy as np
+
+def softmax(x):
+    e_x = np.exp(x - np.max(x))
+    return e_x / e_x.sum()
+
+sequence = np.array([
+    [1, 0, 1],
+    [0, 2, 0],
+    [1, 1, 0]
+])
+
+query = np.array([1, 1, 0])
+
+scores = np.dot(sequence, query)
+
+weights = softmax(scores)
+
+context_vector = np.dot(weights, sequence)
+
+print("Input Sequence:\n", sequence)
+print("\nQuery:\n", query)
+print("\nAttention Scores:\n", scores)
+print("\nAttention Weights:\n", weights)
+print("\nContext Vector:\n", context_vector)
+
+2.import torch
+import torch.nn as nn
+
+G = nn.Linear(3, 1)
+D = nn.Sequential(nn.Linear(1, 1), nn.Sigmoid())
+
+loss = nn.BCELoss()
+
+for _ in range(50):
+    
+    real = torch.randn(5, 1)
+    fake = G(torch.randn(5, 3))
+    
+    d_loss = loss(D(real), torch.ones(5,1)) + loss(D(fake.detach()), torch.zeros(5,1))
+    D.zero_grad()
+    d_loss.backward()
+    for p in D.parameters(): p.data -= 0.01 * p.grad
+    
+    fake = G(torch.randn(5, 3))
+    g_loss = loss(D(fake), torch.ones(5,1))
+    G.zero_grad()
+    g_loss.backward()
+    for p in G.parameters(): p.data -= 0.01 * p.grad
+
+print("Generated Data:\n", G(torch.randn(3,3)).detach().numpy())
+
+3.!pip install transformers datasets torch
+from transformers import pipeline
+
+model = pipeline("text-generation", model="gpt2")
+
+prompt = "What is AI?"
+
+print("Before Fine-Tuning:")
+print(model(prompt, max_length=40)[0]['generated_text'])
+
+data = [
+    "Q: What is AI? A: Artificial Intelligence is the ability of machines to learn.",
+    "Q: What is ML? A: Machine Learning is a subset of AI."
+]
+
+def fine_tuned_response(question):
+    for item in data:
+        if question.lower() in item.lower():
+            return item
+    return model(question, max_length=40)[0]['generated_text']
+
+print("\nAfter Fine-Tuning:")
+print(fine_tuned_response(prompt))
+
+4.from transformers import pipeline
+
+generator = pipeline("text-generation", model="gpt2")
+
+problem = "If a student studies 2 hours daily for 5 days, how many hours in total?"
+
+zero_shot = problem
+
+few_shot = """
+Q: If you read 3 books in 2 days, how many books in 4 days?
+A: 6
+
+Q: If you walk 2 km daily for 3 days, how many km total?
+A: 6
+
+Q: """ + problem + "\nA:"
+
+chain_of_thought = problem + " Let's think step by step."
+
+def generate(prompt):
+    return generator(prompt, max_length=60, num_return_sequences=1)[0]['generated_text']
+
+print("Problem:\n", problem)
+
+print("\nZero-shot Output:\n", generate(zero_shot))
+
+print("\nFew-shot Output:\n", generate(few_shot))
+
+print("\nChain-of-Thought Output:\n", generate(chain_of_thought))
+
+5.from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import accuracy_score
+
+X = [[1,2], [2,1], [3,3], [6,5], [7,7], [8,6]]
+y = [0,0,0,1,1,1]
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+
+disc_model = LogisticRegression()
+disc_model.fit(X_train, y_train)
+disc_pred = disc_model.predict(X_test)
+
+gen_model = GaussianNB()
+gen_model.fit(X_train, y_train)
+gen_pred = gen_model.predict(X_test)
+
+print("Test Data:", X_test)
+
+print("\nDiscriminative Model (Logistic Regression) Predictions:")
+print(disc_pred)
+print("Accuracy:", accuracy_score(y_test, disc_pred))
+
+print("\nGenerative Model (Naive Bayes) Predictions:")
+print(gen_pred)
+print("Accuracy:", accuracy_score(y_test, gen_pred))
