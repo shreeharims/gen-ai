@@ -1,3 +1,8 @@
+Scapy (Python Networking) 
+ A powerful Python tool for packet creation, sending, and sniffing.  
+ Used for network analysis, scanning, and security testing.  
+ Helps build custom packets like ARP, ICMP, TCP.  
+
 1-b) Ethernet + IP Frame
 Using Scapy, create a frame that consists of an Ethernet layer, with an IP layer on top. With the show() method, capture all fields of the frame.
  Code
