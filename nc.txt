@@ -1,0 +1,52 @@
+1. Write a Shell script for port scan using NetCat.
+#!/bin/bash
+host="www.example.com"
+read -p "Enter starting port: " start_port
+read -p "Enter ending port: " end_port
+for (( port=start_port; port<=end_port; port++ ))
+do
+    echo "Scanning port $port..."
+    nc -zv -w1 "$host" "$port" 2>&1
+done
+
+2. Using NetCat, show how to Communicate with the server using 2 terminals and across 
+systems 
+Terminal 1 (Server):
+type: ip a 
+and copy the IP address
+nc -l -p 1234
+Terminal 2 (Client):
+nc [IP addr] 1234
+
+3.Using NetCat, show the usage of HTML  Request/Response (HEAD /GET).  
+nc www.example.com 80
+Then type:
+HEAD / HTTP/1.1
+Host: www.example.com
+
+4.Using NetCat, show communication between browser and the server. (for plain text) 
+In terminal:
+nc -l -p 5000
+ Step 2: Open browser
+http://localhost:5000
+ Step 3: Wait → terminal shows request
+ Step 4: Send response again
+HTTP/1.1 200 OK
+Content-Type: text/html
+
+<h1>Hello from Netcat</h1>
+
+5.Using NetCat, show communication between browser and the server (for an image). 
+Step 1: Start server
+nc -l -p 5000
+Step 2: Open browser
+http://localhost:5000
+Step 3: In terminal, type:
+HTTP/1.1 200 OK
+Content-Type: image/png
+
+Press Enter twice
+Step 4: Send image
+cat image.png
+Output
+Image will display in browser
