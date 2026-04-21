@@ -1,21 +1,7 @@
-BadStore (Web Security / SQL Injection / Cookies) 
-• A vulnerable web application used for learning security concepts.  
-• Helps practice SQL Injection, cookie manipulation, authentication bypass.  
-• Used to understand how attackers exploit web application weaknesses.  
-Scapy (Python Networking) 
-• A powerful Python tool for packet creation, sending, and sniffing.  
-• Used for network analysis, scanning, and security testing.  
-• Helps build custom packets like ARP, ICMP, TCP.  
-NetCat (Networking Tool) 
-• A simple tool for sending and receiving data over network connections.  
-• Used for port scanning, chatting between systems, and debugging.  
-• Known as the “Swiss army knife of networking”.  
 Nmap (Scanning Tool) 
-• A tool used to discover hosts and open ports in a network.  
-• Helps in security auditing and vulnerability detection.  
-• Can perform port scan, OS detection, and service version detection.  
- 
-PART 4: NMAP (SCANNING TOOL) 
+A tool used to discover hosts and open ports in a network.  
+Helps in security auditing and vulnerability detection.  
+Can perform port scan, OS detection, and service version detection.  
  
 1. Full Question 
 Using Nmap perform Ping Scan (determine which hosts are up). Also show how to 
